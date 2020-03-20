@@ -28,7 +28,7 @@
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
       }
       function draw(data) {
-        var cases = `<p>Bestätigte Infektionen: <b>${fmtNr(
+        var cases = `<p>Bestätigte Fälle: <b>${fmtNr(
           data.confirmed.value
         )}</b></p>`;
         var recovered = `<p>Genesene Patienten: <b>${fmtNr(
