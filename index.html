@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Corona Statistics</title>
+    <meta name="description" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Open Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif;
+            text-rendering: optimizeLegibility;
+            font-size: 24px;
+            line-height: 1.4;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function draw(data) {
+            var deaths = `<b>${data.total_deaths}</b> Tode (+${data.new_deaths})`
+            var cases = `<b>${data.total_cases}</b> Fälle (+${data.new_cases})`
+            var html = `<p>${cases}</p><p>${deaths}</p>`.replace(/,/g, '.');
+            document.getElementById('root').innerHTML = html;
+        }
+      var data = null;
+
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
+      xhr.addEventListener("readystatechange", function() {
+        if (this.readyState === this.DONE) {
+            draw(JSON.parse(this.responseText));
+        }
+      });
+
+      xhr.open(
+        "GET",
+        "https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php"
+      );
+      xhr.setRequestHeader(
+        "x-rapidapi-host",
+        "coronavirus-monitor.p.rapidapi.com"
+      );
+      xhr.setRequestHeader(
+        "x-rapidapi-key",
+        "65432760f5msh2625ec0689422e0p1e134djsnd9df4579074c"
+      );
+
+      xhr.send(data);
+    </script>
+  </head>
+  <body><div id="root"/></body>
+</html>
