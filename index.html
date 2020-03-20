@@ -24,36 +24,27 @@
       }
     </style>
     <script>
+      function fmtNr(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+      }
       function draw(data) {
-        var deaths = `<p><b>${data.total_deaths}</b> Tode (+${data.new_deaths})</p>`;
-        var cases = `<p><b>${data.total_cases}</b> Fälle (+${data.new_cases})</p>`;
-        var stats = `<footer>${data.statistic_taken_at}</footer>`;
-        var html = `${cases}${deaths}${stats}`.replace(/,/g, ".");
+        var cases = `<p>Bestätigte Infektionen: <b>${fmtNr(data.confirmed.value)}</b></p>`;
+        var recovered = `<p>Genesene Patienten: <b>${fmtNr(data.recovered.value)}</b></p>`;
+        var deaths = `<p>Todesfälle: <b>${fmtNr(data.deaths.value)}</b></p>`;
+        var stats = `<footer>${new Date(data.lastUpdate).toLocaleString("de")}</footer>`;
+        var html = `${cases}${recovered}${deaths}${stats}`;
+        console.log(data.lastUpdate);
         document.getElementById("root").innerHTML = html;
       }
+
       var data = null;
-
       var xhr = new XMLHttpRequest();
-      xhr.withCredentials = true;
-
       xhr.addEventListener("readystatechange", function() {
         if (this.readyState === this.DONE) {
           draw(JSON.parse(this.responseText));
         }
       });
-
-      xhr.open(
-        "GET",
-        "https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php"
-      );
-      xhr.setRequestHeader(
-        "x-rapidapi-host",
-        "coronavirus-monitor.p.rapidapi.com"
-      );
-      xhr.setRequestHeader(
-        "x-rapidapi-key",
-        "3d57d01269msh01a783e1f034ba1p1650e5jsn3f25c642b81f"
-      );
+      xhr.open( "GET", " https://covid19.mathdro.id/api/");
       xhr.send(data);
     </script>
   </head>
