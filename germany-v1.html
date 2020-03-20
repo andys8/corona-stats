@@ -13,7 +13,6 @@
         text-rendering: optimizeLegibility;
         font-size: 20px;
         line-height: 1.2;
-        text-align: center;
       }
       p {
         margin: 10px;
@@ -21,17 +20,24 @@
       footer {
         font-size: 14px;
         color: #aaa;
+        margin: 10px;
       }
     </style>
     <script>
       function fmtNr(num) {
-        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
       }
       function draw(data) {
-        var cases = `<p>Bestätigte Infektionen: <b>${fmtNr(data.confirmed.value)}</b></p>`;
-        var recovered = `<p>Genesene Patienten: <b>${fmtNr(data.recovered.value)}</b></p>`;
+        var cases = `<p>Bestätigte Infektionen: <b>${fmtNr(
+          data.confirmed.value
+        )}</b></p>`;
+        var recovered = `<p>Genesene Patienten: <b>${fmtNr(
+          data.recovered.value
+        )}</b></p>`;
         var deaths = `<p>Todesfälle: <b>${fmtNr(data.deaths.value)}</b></p>`;
-        var stats = `<footer>${new Date(data.lastUpdate).toLocaleString("de")}</footer>`;
+        var stats = `<footer>${new Date(data.lastUpdate).toLocaleString(
+          "de"
+        )}</footer>`;
         var html = `${cases}${recovered}${deaths}${stats}`;
         console.log(data.lastUpdate);
         document.getElementById("root").innerHTML = html;
